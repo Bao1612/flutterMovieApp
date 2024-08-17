@@ -2,21 +2,21 @@ import 'package:codes/components/my_button.dart';
 import 'package:codes/components/my_text_field.dart';
 import 'package:codes/components/square_tile.dart';
 import 'package:codes/handle_login.dart';
-import 'package:codes/register_page.dart';
+import 'package:codes/login_page.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'colors.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+  final reConfirmPasswordController = TextEditingController();
 
   //sign user in method
 
@@ -33,17 +33,15 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 50),
               //logo
               const Text(
-                'Login',
+                'Register',
                 style: TextStyle(
-                    fontSize: 80,
-                    fontWeight: FontWeight.bold,
+                  fontSize: 80,
+                  fontWeight: FontWeight.bold,
                   color: Colors.white
                 ),
               ),
 
-
               const SizedBox(height: 75),
-
 
               //username  text field
               MyTextField(
@@ -51,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
                 hintText:   'Username',
                 obscureText: false,
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 40),
 
               //password text field
               MyTextField(
@@ -60,27 +58,23 @@ class _LoginPageState extends State<LoginPage> {
                 obscureText: true,
               ),
 
-              //forgot password
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      'Forgot Password?',
-                      style: TextStyle(color: Colors.grey[600]),
-                    ),
-                  ],
-                ),
+              const SizedBox(height: 40),
+
+              //password text field
+              MyTextField(
+                controller: reConfirmPasswordController,
+                hintText: 'Reconfirm Password',
+                obscureText: true,
               ),
+
 
               const SizedBox(height: 25),
 
 
               //sign in button
               MyButton(
-                buttonText: 'Sign In',
-                onTap: signUserIn,
+                buttonText: 'Register',
+                onTap: registerUser,
               ),
 
               const SizedBox(height: 50),
@@ -88,23 +82,23 @@ class _LoginPageState extends State<LoginPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Row(
-                  children: [
-                    Expanded(
-                      child: Divider(
+                    children: [
+                      Expanded(
+                        child: Divider(
+                          thickness: 0.5,
+                          color: Colors.grey[400],
+                        ),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Text('Or continue with',
+                        style: TextStyle(color: Colors.white),),
+                      ),
+                      Expanded(child: Divider(
                         thickness: 0.5,
                         color: Colors.grey[400],
-                      ),
-                    ),
-                     const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      child: Text('Or continue with',
-                      style: TextStyle(color: Colors.white),),
-                    ),
-                    Expanded(child: Divider(
-                      thickness: 0.5,
-                      color: Colors.grey[400],
-                    ))
-                  ]
+                      ))
+                    ]
                 ),
               ),
 
@@ -125,18 +119,18 @@ class _LoginPageState extends State<LoginPage> {
 
               const SizedBox(height: 50),
 
-               Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Not a member?',
+                    'Already have Account?',
                     style: TextStyle(color: Colors.white),
                   ),
                   const SizedBox(width: 4),
                   GestureDetector(
-                    onTap: navigateToRegisterScreen,
+                    onTap: navigateToLoginScreen,
                     child: const Text(
-                        'Register now',
+                      'Sign in now',
                       style: TextStyle(
                         color: Colors.blue,
                         fontWeight: FontWeight.bold,
@@ -153,25 +147,14 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void  signUserIn() {
-    if(usernameController.text.isEmpty || passwordController.text.isEmpty) {
-      Fluttertoast.showToast(
-          msg: 'Please enter username or password',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          textColor: Colors.black,
-          fontSize: 16,
-          backgroundColor: Colors.grey[300]
-      );
-    } else {
-      loginUser(context, usernameController.text, passwordController.text);
-    }
+  void  registerUser() {
+    // registerUser(context, usernameController.text, passwordController.text);
   }
 
-  void navigateToRegisterScreen() {
+  void navigateToLoginScreen() {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => const RegisterPage()),
+      MaterialPageRoute(builder: (context) => const LoginPage()),
     );
   }
 
