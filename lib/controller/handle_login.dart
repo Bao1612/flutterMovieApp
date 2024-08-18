@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:codes/home.dart';
+import 'package:codes/screen/movie_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
@@ -34,7 +35,7 @@ Future<void> loginUser(BuildContext context, String email, String password) asyn
       //Navigate to home page
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
 
       // Do something with the response (e.g., save the token)

@@ -1,10 +1,10 @@
 import 'package:codes/components/my_button.dart';
 import 'package:codes/components/my_text_field.dart';
 import 'package:codes/components/square_tile.dart';
-import 'package:codes/handle_login.dart';
-import 'package:codes/login_page.dart';
+import 'package:codes/controller/handle_login.dart';
+import 'package:codes/screen/login_page.dart';
 import 'package:flutter/material.dart';
-import 'colors.dart';
+import '../colors.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});

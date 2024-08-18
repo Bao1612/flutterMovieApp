@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:codes/controller/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -16,6 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Navbar(),
       appBar: AppBar(
         title: const Text(
           'Rest Api Call',
@@ -49,6 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void fetchUsers() async {
+    users.clear();
     const url = 'https://randomuser.me/api/?results=100';
     final uri = Uri.parse(url);
     final response = await http.get(uri);

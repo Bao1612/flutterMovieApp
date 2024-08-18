@@ -1,5 +1,7 @@
 import 'package:codes/home.dart';
-import 'package:codes/login_page.dart';
+import 'package:codes/screen/login_page.dart';
+import 'package:codes/screen/movie_screen.dart';
+import 'package:codes/screen/tv_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,7 +16,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: LoginPage(),
-
+      initialRoute: '/movie',
+      routes: {
+        '/movie': (context) => const MovieScreen(),
+        '/tv_series': (context) => const TvScreen(),
+      },
     );
   }
 }

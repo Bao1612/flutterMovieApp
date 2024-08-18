@@ -1,11 +1,11 @@
 import 'package:codes/components/my_button.dart';
 import 'package:codes/components/my_text_field.dart';
 import 'package:codes/components/square_tile.dart';
-import 'package:codes/handle_login.dart';
-import 'package:codes/register_page.dart';
+import 'package:codes/controller/handle_login.dart';
+import 'package:codes/screen/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'colors.dart';
+import '../colors.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
