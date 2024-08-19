@@ -1,9 +1,10 @@
-import 'package:codes/components/grid_layout.dart';
+import 'package:codes/components/movie_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:codes/colors.dart';
 import '../controller/navbar.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:codes/utils.dart';
 
 class MovieScreen extends StatefulWidget {
   const MovieScreen({super.key});
@@ -13,17 +14,21 @@ class MovieScreen extends StatefulWidget {
 }
 
 class _MovieScreenState extends State<MovieScreen> {
-  List<dynamic> users = [];
+  List<dynamic> movies = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchMovies(); // Automatically fetch users when the widget is created
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: mainTheme,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => fetchUsers(), // Fixed: Correctly calls fetchUsers
-        child: const Icon(Icons.refresh),
-      ),
-      drawer: Navbar(),
+      drawer: const Navbar(),
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.white),
         title: const Text(
           'Movie Series',
           style: TextStyle(color: Colors.white, fontSize: 24),
@@ -32,21 +37,28 @@ class _MovieScreenState extends State<MovieScreen> {
         backgroundColor: Colors.blue,
       ),
       body:
-      GridLayout(user: users,),
-    );;
+      MoviesGridLayout(user: movies,),
+    );
   }
 
-  void fetchUsers() async {
-    users.clear();
-    const url = 'https://randomuser.me/api/?results=100';
-    final uri = Uri.parse(url);
-    final response = await http.get(uri);
-    final body = response.body;
-    final json = jsonDecode(body);
+  Future<void> fetchMovies() async {
+    const url = moviesApi;
+    final response = await http.get(
+      Uri.parse(url),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'accept': 'application/json',
+      },
+    );
 
-    setState(() {
-      users = json['results']; // Fixed: Update the users list
-    });
+    if (response.statusCode == 200) {
+      final jsonData = jsonDecode(response.body);
+      setState(() {
+        movies = jsonData['results'];
+      });
+    } else {
+      print('Failed to load movies: ${response.statusCode}');
+    }
   }
 
 }

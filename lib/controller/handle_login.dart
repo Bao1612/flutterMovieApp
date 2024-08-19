@@ -35,7 +35,7 @@ Future<void> loginUser(BuildContext context, String email, String password) asyn
       //Navigate to home page
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
+        MaterialPageRoute(builder: (context) => const MovieScreen()),
       );
 
       // Do something with the response (e.g., save the token)

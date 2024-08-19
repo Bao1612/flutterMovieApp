@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/movie': (context) => const MovieScreen(),
         '/tv_series': (context) => const TvScreen(),
+        '/logout': (context) => const LoginPage(),
       },
     );
   }
