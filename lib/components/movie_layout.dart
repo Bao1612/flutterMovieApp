@@ -1,9 +1,11 @@
+import 'package:codes/components/my_button.dart';
 import 'package:flutter/material.dart';
 import 'package:codes/colors.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
+import 'bottom_sheet.dart';
 
 class MoviesGridLayout extends StatefulWidget {
-  List<dynamic> user =[];
+  List<dynamic> user = [];
   MoviesGridLayout({
     super.key,
     required this.user,
@@ -31,7 +33,9 @@ class _MoviesGridLayoutState extends State<MoviesGridLayout> {
           itemBuilder: (context, index) {
             final item = widget.user[index];
             return GestureDetector(
-              onTap: () {viewClick(item['title']);},
+              onTap: () {
+                _showCustomBottomSheet(context, item);
+              },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -66,14 +70,14 @@ class _MoviesGridLayoutState extends State<MoviesGridLayout> {
     );
   }
 
-  void viewClick(String movieName) {
-    Fluttertoast.showToast(
-        msg: movieName,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        textColor: Colors.black,
-        fontSize: 16,
-        backgroundColor: Colors.grey[300]
+  void _showCustomBottomSheet(BuildContext context, dynamic item) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      enableDrag: false,
+      builder: (BuildContext context) {
+        return CustomBottomSheet(item: item);
+      },
     );
   }
 

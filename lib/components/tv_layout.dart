@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:codes/colors.dart';
 
+import 'bottom_sheet.dart';
+
 class TvGridLayout extends StatefulWidget {
   List<dynamic> tv =[];
   TvGridLayout({
@@ -29,36 +31,54 @@ class _TvGridLayoutState extends State<TvGridLayout> {
           ),
           itemBuilder: (context, index) {
             final item = widget.tv[index];
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 12.0),
-                Expanded(
-                  child: ClipRRect(
-                    child: Image.network(
-                      'https://image.tmdb.org/t/p/w500${item['poster_path']}',
-                      fit: BoxFit.cover,
-                      width:
-                      double.infinity, // Fill the width of the container
+            return GestureDetector(
+              onTap: () {
+                _showCustomBottomSheet(context, item);
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 12.0),
+                  Expanded(
+                    child: ClipRRect(
+                      child: Image.network(
+                        'https://image.tmdb.org/t/p/w500${item['poster_path']}',
+                        fit: BoxFit.cover,
+                        width:
+                        double.infinity, // Fill the width of the container
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 8.0), // Spacing between image and text
-                Center(
-                  child: Text(
-                    '${item['original_name']}', // Replace with actual movie names
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.0,
+                  const SizedBox(height: 8.0), // Spacing between image and text
+                  Center(
+                    child: Text(
+                      '${item['original_name']}', // Replace with actual movie names
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12.0,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             );
           },
         ),
       ),
     );
   }
+
+  void _showCustomBottomSheet(BuildContext context, dynamic item) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      enableDrag: false,
+      builder: (BuildContext context) {
+        return CustomBottomSheet(item: item);
+      },
+    );
+  }
+
+
 }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:codes/screen/movie_screen.dart';
+import 'package:codes/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
@@ -31,14 +32,8 @@ Future<void> loginUser(BuildContext context, String email, String password) asyn
     if (response.statusCode == 200) {
       // Login thành công, xử lý response
       final Map<String, dynamic> responseData = jsonDecode(response.body);
-      Fluttertoast.showToast(
-        msg: 'Login successful',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        textColor: Colors.black,
-        fontSize: 16,
-        backgroundColor: Colors.grey[300],
-      );
+
+      showToast('Login successful');
 
       // Delay 3 giây trước khi điều hướng đến trang tiếp theo
       await Future.delayed(const Duration(seconds: 3));
