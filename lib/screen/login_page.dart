@@ -128,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     'Not a member?',
                     style: TextStyle(color: Colors.white),
                   ),

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:codes/home.dart';
 import 'package:codes/screen/movie_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -9,6 +8,15 @@ Future<void> loginUser(BuildContext context, String email, String password) asyn
   const String apiUrl = 'http://10.0.2.2:3333/api/v1/auth/login'; // Replace with your API URL
 
   try {
+    // Hiển thị loading dialog
+    showDialog(
+      context: context,
+      barrierDismissible: false, // Người dùng không thể dismiss dialog bằng cách nhấn ra ngoài
+      builder: (context) {
+        return Center(child: CircularProgressIndicator());
+      },
+    );
+
     final response = await http.post(
       Uri.parse(apiUrl),
       headers: <String, String>{
@@ -21,38 +29,43 @@ Future<void> loginUser(BuildContext context, String email, String password) asyn
     );
 
     if (response.statusCode == 200) {
-      // Login successful, handle the response
+      // Login thành công, xử lý response
       final Map<String, dynamic> responseData = jsonDecode(response.body);
       Fluttertoast.showToast(
-          msg: 'Login successful',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          textColor: Colors.black,
-          fontSize: 16,
-          backgroundColor: Colors.grey[300]
+        msg: 'Login successful',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        textColor: Colors.black,
+        fontSize: 16,
+        backgroundColor: Colors.grey[300],
       );
 
-      //Navigate to home page
+      // Delay 3 giây trước khi điều hướng đến trang tiếp theo
+      await Future.delayed(const Duration(seconds: 3));
+
+      Navigator.of(context).pop(); // Đóng loading dialog trước khi điều hướng
+      // Điều hướng đến trang tiếp theo
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const MovieScreen()),
       );
 
-      // Do something with the response (e.g., save the token)
+      // Có thể lưu token hoặc xử lý thêm tại đây
     } else {
-      // Login failed, handle the error
+      Navigator.of(context).pop(); // Đóng loading dialog nếu login thất bại
+      // Login thất bại, thông báo lỗi
       Fluttertoast.showToast(
-          msg: 'Login fail',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          textColor: Colors.black,
-          fontSize: 16,
-          backgroundColor: Colors.grey[300]
+        msg: 'Login fail',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        textColor: Colors.black,
+        fontSize: 16,
+        backgroundColor: Colors.grey[300],
       );
-
     }
   } catch (e) {
-    // Handle any errors that occur during the request
+    Navigator.of(context).pop(); // Đóng loading dialog nếu có lỗi xảy ra
+    // Xử lý lỗi
     print("Error occurred: $e");
   }
 }
